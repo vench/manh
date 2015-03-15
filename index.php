@@ -13,6 +13,6 @@ require_once($yii);
 Yii::createWebApplication($config)->run();
 
 $exec = Yii::app()->exec;
-//$exec->exec('service apache2 reload');
+ 
 $model = ServerHost::createByFile($exec->defaultAppach2Conf);
 var_dump($model);

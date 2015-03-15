@@ -65,7 +65,7 @@ return array(
 			'errorAction'=>'site/error',
 		),
                 'exec'=>array(
-                    'class'=>'application.components.ServerCommand',
+                    'class'=>'ext.servercommand.ServerCommand',
                 ),
 		'log'=>array(
 			'class'=>'CLogRouter',
