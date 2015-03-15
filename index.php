@@ -11,3 +11,8 @@ defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
 require_once($yii);
 Yii::createWebApplication($config)->run();
+
+$exec = Yii::app()->exec;
+//$exec->exec('service apache2 reload');
+$model = ServerHost::createByFile($exec->defaultAppach2Conf);
+var_dump($model);
