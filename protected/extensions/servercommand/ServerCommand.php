@@ -34,23 +34,46 @@ class ServerCommand extends CComponent {
      * @var array
      */
     public $serverStrategyOptions = array();
+    
+    /**
+     * Класс который будет управлять web сервером
+     * @var string 
+     */
+    public $serverStrategyClass = 'BlankServerCommandStrategy';
 
 
     public function init() {
-        Yii::import('ext.servercommand.*');
-        $SERVER_SOFTWARE = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
-        if(preg_match('/Apache\/2\.[0-9\.]*\s*\(Ubuntu\)/i', $SERVER_SOFTWARE)) {
-            $this->serverCommandStrategy = new UbtAp2CommandStrategy($this); 
-        } else {
-            $this->serverCommandStrategy = new BlankServerCommandStrategy($this); 
-        }   
-         
-        $key = strtolower(get_class($this->serverCommandStrategy));
+        Yii::import('ext.servercommand.*'); 
+        
+        if(!class_exists($this->serverStrategyClass) ) {
+            $this->serverStrategyClass = 'BlankServerCommandStrategy';
+        }
+        $ref = new ReflectionClass($this->serverStrategyClass);
+        $this->serverCommandStrategy = $ref->newInstanceArgs(array($this)); 
+        $key = strtolower( $ref->getName() );
         if(isset($this->serverStrategyOptions[$key])) {
             foreach($this->serverStrategyOptions[$key] as $key=>$value){
                 $this->serverCommandStrategy->{$key} = $value;
             }
         }
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getIndexFileContent() {
+        return '<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>';
     }
     
     /**
@@ -61,24 +84,66 @@ class ServerCommand extends CComponent {
         return $this->serverCommandStrategy;
     }            
 
-    public function addHost($serverName, $documentRoot) {
-        
-        
-        
-        $this->exec('a2ensite '.basename($confFile).'');
-        $this->reloadApache2();
+    /**
+     * 
+     * @param IServerHostModel $model
+     */
+    public function addHost(IServerHostModel $model) {   
+         $this->normalizeServerHostModel($model);
+         $this->getServerCommandStrategy()->addHost($model);
+         
+         $indexFile = $model->getDocumentRoot().DIRECTORY_SEPARATOR.'index.html';
+         file_put_contents($indexFile, $this->getIndexFileContent());  
+    }
+    
+    /**
+     * 
+     * @param IServerHostModel $model
+     */
+    public function removeHost(IServerHostModel $model) { 
+        $this->getServerCommandStrategy()->removeHost($model);
     }
 
-   
+    /**
+     * 
+     */
     public function stopServer() {
         $this->getServerCommandStrategy()->stopServer();
     }
     
-    
+    /**
+     * 
+     */
     public function restartServer() {
         $this->getServerCommandStrategy()->restartServer();
     }
     
+    /**
+     * 
+     * @param IServerHostModel $model
+     * @throws ServerCommandException
+     */
+    protected function normalizeServerHostModel(IServerHostModel $model ) {
+        if(!is_dir($model->getDocumentRoot()) && !mkdir($model->getDocumentRoot())) {
+             throw new ServerCommandException("Dir is not found");
+         }
+         if(!is_writable($model->getDocumentRoot())) {
+             throw new ServerCommandException("Dir host is read only");
+         }
+         if(empty($model->getServerName())) {
+             throw new ServerCommandException("Server Name empty");
+         }
+         
+         if(empty($model->getServerAlias())) {
+             $model->setServerAlias("www.{$model->getServerName()}");
+         }
+         if(empty($model->getErrorLog())) {
+             $model->setErrorLog("logs/{$model->getServerName()}.log");
+         }
+         if(empty($model->getCustomLog())) {
+             $model->setCustomLog("logs/{$model->getServerName()}.log");
+         }
+    }
  
 }
 

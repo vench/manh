@@ -14,5 +14,4 @@ Yii::createWebApplication($config)->run();
 
 $exec = Yii::app()->exec;
  
-$model = ServerHost::createByFile($exec->defaultAppach2Conf);
-var_dump($model);
+ echo get_class($exec->getServerCommandStrategy());

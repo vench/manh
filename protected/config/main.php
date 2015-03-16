@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'Simple management of web server',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -60,12 +60,26 @@ return array(
 			'charset' => 'utf8',
 		),
 		*/
-		'errorHandler'=>array(
-			// use 'site/error' action to display errors
+		'errorHandler'=>array( 
 			'errorAction'=>'site/error',
 		),
                 'exec'=>array(
                     'class'=>'ext.servercommand.ServerCommand',
+                    //выбран сервер WIN 32 Apache 2
+                    'serverStrategyClass'=>'Win32Ap2CommandStrategy',
+                    'serverStrategyOptions'=>array(
+                        //мои настройки сервера на WIN 32 
+                        'win32ap2commandstrategy'=>array(
+                            'pathApache' => 'C:\\xampp\\apache',
+                            'pathHttpdVhosts' => 'C:\\xampp\\apache\\conf\\extra\\httpd-vhosts.conf',
+                            'baseNameVirtualHost' => '*:80',
+                        ),
+                        //мои настройки сервера на Ubuntu 14
+                        'ubtap2commandstrategy'=>array(
+                            'defaultAppach2Conf' => '/etc/apache2/sites-available/000-default.conf',
+                            'appach2DirSitesAvail' => '/etc/apache2/sites-available/',
+                        ),
+                    ),
                 ),
 		'log'=>array(
 			'class'=>'CLogRouter',

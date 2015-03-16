@@ -38,10 +38,10 @@ class ServerHost extends CActiveRecord implements IServerHostModel
 			// The following rule is used by search().
                         array('ServerAdmin', 'email'),
                         array('port', 'numerical', 'integerOnly'=>TRUE),
-                        array('ip', 'match', 'pattern'=>'/*|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/ui'),
-                        array('ServerName, ServerAlias', 'url'),
+                        array('ip', 'match', 'pattern'=>'/\*|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/ui'),
+                        array('ServerName, ServerAlias', 'url', 'pattern'=>'/^(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)/i'),
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, port, ip fileConf, ServerAdmin, ServerName, ServerAlias, DocumentRoot, ErrorLog, CustomLog', 'safe', 'on'=>'search'),
+			array('Id, port, ip, fileConf, ServerAdmin, ServerName, ServerAlias, DocumentRoot, ErrorLog, CustomLog', 'safe', 'on'=>'search'),
 		);
 	}
 
