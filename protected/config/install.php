@@ -1,5 +1,15 @@
 <?php
 
+$patch = dirname(__FILE__).DIRECTORY_SEPARATOR.'..';   
+foreach(array(
+      'protected'.DIRECTORY_SEPARATOR.'runtime', 
+      'protected'.DIRECTORY_SEPARATOR.'data',
+      'assets') as $dir) {
+    $patchdir = $patch.DIRECTORY_SEPARATOR.$dir;
+    if(!is_dir($patchdir)) { 
+          mkdir($patchdir, 0777);
+    } 
+} 
  
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
