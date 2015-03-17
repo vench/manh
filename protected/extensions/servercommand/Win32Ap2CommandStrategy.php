@@ -53,8 +53,8 @@ class Win32Ap2CommandStrategy extends AServerCommandStrategy  {
         $host = $this->getWin32Ap2VirtualHostItemInIServerHostModel($model);
         $hosts[] = $host;
         $this->updateFileVHosts($hosts);        
-        $this->stopServer();
-        $this->startServer();
+        $this->restartServer();
+       
     }
     
     public function removeHost(IServerHostModel $model) {

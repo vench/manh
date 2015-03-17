@@ -113,13 +113,11 @@ class Settings extends CActiveRecord
          * @return \Settings
          */
         public static function setValue($key, $value) {
-            $model = self::model()->find('key=:key', array(
+            self::model()->deleteAll('key=:key', array(
                 ':key'=>$key,
-            ));
-            if(is_null($model)) {
-                $model = new Settings();
-                $model->key = $key;
-            }
+            )); 
+            $model = new Settings();
+            $model->key = $key;
             $model->value = $value;
             $model->save();
             return $model;

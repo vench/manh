@@ -13,6 +13,10 @@ class InstallController extends Controller
 		$this->render('index', array(
                     'status'=>$status,
                 ));
+                
+                $fconf = Yii::getPathOfAlias('application.config').DIRECTORY_SEPARATOR.'install.php'; 
+                $newname = Yii::getPathOfAlias('application.config').DIRECTORY_SEPARATOR.'_install.php'; 
+                rename($fconf, $newname);
 	}
         
         
@@ -72,12 +76,6 @@ class InstallController extends Controller
         * @return boolean
         */
        public function migrationExists($name) {
-           $db = Yii::app()->getDb();
-           $list = CHtml::listData($db->createCommand()
-			->select('version, apply_time')
-			->from('tbl_migration')
-			->order('version DESC') 
-			->queryAll(), 'version', 'apply_time');
-           return isset($list[$name]);
+          return false;
        }
 }
