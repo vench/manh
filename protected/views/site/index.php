@@ -78,6 +78,7 @@ Ext.onReady(function(){
                         icon: Ext.MessageBox.ERROR,
                         buttons: Ext.Msg.OK
                     });
+                    console.log(operation.getError());
                 }
             }
         },
@@ -193,13 +194,6 @@ Ext.onReady(function(){
                     if (selection) {
                         store.remove(selection);
                     }
-                }
-            }, '-', {
-                text: 'Перезапустить сервер',
-               // iconCls: 'icon-add',
-                handler: function(){
-                   
-                     
                 }
             }]
         }]

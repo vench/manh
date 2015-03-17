@@ -31,7 +31,9 @@ class UbtAp2CommandStrategy extends AServerCommandStrategy {
     }
     
     public function restartServer() {
-        $this->exec('service apache2 reload');
+        //$this->exec('service apache2 reload');
+        //устанавливаем флаг о необходимости произвести перезагрузку для планировщика
+        Settings::setServerRestart(true);
     }
     
     public function addHost(IServerHostModel $model) {
@@ -54,7 +56,7 @@ class UbtAp2CommandStrategy extends AServerCommandStrategy {
     
     private function exec($cmd) {
          $result = system($cmd);
-        var_dump($result, $cmd);
+        //var_dump($result, $cmd);
         return $result;
     }
 }

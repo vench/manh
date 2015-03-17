@@ -114,6 +114,13 @@ class ServerCommand extends CComponent {
     /**
      * 
      */
+    public function startServer() {
+        $this->getServerCommandStrategy()->startServer();
+    }
+    
+    /**
+     * 
+     */
     public function restartServer() {
         $this->getServerCommandStrategy()->restartServer();
     }

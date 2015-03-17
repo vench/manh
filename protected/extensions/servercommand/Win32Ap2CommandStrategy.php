@@ -38,9 +38,10 @@ class Win32Ap2CommandStrategy extends AServerCommandStrategy  {
     }
     
     public function restartServer() {
-        //$cmd = $this->pathApache.'\\bin\\httpd.exe -k restart';
-        $this->stopServer();
-        $this->startServer();
+        // $this->stopServer();
+        // $this->startServer();
+        //устанавливаем флаг о необходимости произвести перезагрузку для планировщика
+        Settings::setServerRestart(true);
     }
     
     
