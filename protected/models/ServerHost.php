@@ -34,6 +34,7 @@ class ServerHost extends CActiveRecord implements IServerHostModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+                        array('DocumentRoot, ServerName, ServerAdmin', 'required'),
 			array('fileConf, ip, ServerAdmin, ServerName, ServerAlias, DocumentRoot, ErrorLog, CustomLog', 'length', 'max'=>255),
 			// The following rule is used by search().
                         array('ServerAdmin', 'email'),
