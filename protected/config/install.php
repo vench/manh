@@ -1,11 +1,11 @@
 <?php
 
-$patch = dirname(__FILE__).DIRECTORY_SEPARATOR.'..';   
+$patch = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..';   
 foreach(array(
       'protected'.DIRECTORY_SEPARATOR.'runtime', 
       'protected'.DIRECTORY_SEPARATOR.'data',
       'assets') as $dir) {
-    $patchdir = $patch.DIRECTORY_SEPARATOR.$dir;
+    $patchdir = $patch.DIRECTORY_SEPARATOR.$dir;// echo $patchdir;
     if(!is_dir($patchdir)) { 
           mkdir($patchdir, 0777);
     } 
