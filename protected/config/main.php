@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Simple management of web server',
+	'name'=>'Простое управление веб-сервера',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -66,7 +66,7 @@ return array(
                 'exec'=>array(
                     'class'=>'ext.servercommand.ServerCommand',
                     //выбран сервер WIN 32 Apache 2
-                    'serverStrategyClass'=>'Win32Ap2CommandStrategy',
+                    'serverStrategyClass'=>'BlankServerCommandStrategy',
                     'serverStrategyOptions'=>array(
                         //мои настройки сервера на WIN 32 
                         'win32ap2commandstrategy'=>array(

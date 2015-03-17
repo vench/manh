@@ -13,7 +13,7 @@ foreach(array(
  
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Simple management of web server: install',
+	'name'=>'Простое управление веб-сервера: установка',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
